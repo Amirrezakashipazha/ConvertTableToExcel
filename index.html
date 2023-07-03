@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./xlsx.core.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      function exportToExcel() {
+        // تعریف متغیرها
+        var table = document.getElementById("myTable"); // جدول HTML
+        var rows = table.rows; // ردیف‌های جدول
+        var header = table.createTHead(); // ساخت سرصفحه جدول
+        var headerRow = header.insertRow(0); // ساخت ردیف سرصفحه
+        var fileName = "table.xlsx"; // نام فایل اکسل
+        // ساخت سرستون‌های جدول
+        for (var i = 0; i < rows[0].cells.length; i++) {
+          var cell = headerRow.insertCell(i);
+          cell.innerHTML = rows[0].cells[i].innerHTML;
+        }
+        // تبدیل جدول به فایل اکسل
+        var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+        XLSX.writeFile(wb, fileName);
+      }
+    </script>
+    <table id="myTable">
+      <thead>
+        <tr>
+          <th>نام</th>
+          <th>سن</th>
+          <th>شغل</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>آنا</td>
+          <td>27</td>
+          <td>مهندس</td>
+        </tr>
+        <tr>
+          <td>جان</td>
+          <td>32</td>
+          <td>مدیر</td>
+        </tr>
+        <tr>
+          <td>ماری</td>
+          <td>24</td>
+          <td>طراح</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button id="btnExport" onclick="exportToExcel()">Export HTML Table</button>
+  </body>
+</html>
